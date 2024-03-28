@@ -246,4 +246,8 @@ function initLinksPanel() {
     createLinkEl(url, comments);
   });
 }
-initLinksPanel();
+
+// run initLinksPanel only if url matches https://news.ycombinator.com/item?id=…
+if (/news\.ycombinator\.com\/item\?id=\d+/.test(location.href)) {
+  initLinksPanel();
+}
