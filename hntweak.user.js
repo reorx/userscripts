@@ -90,7 +90,7 @@ textarea {
   position: fixed;
   right: 12px;
   bottom: 0;
-  width: 400px;
+  width: 430px;
   background: #fff;
   border: 1px solid var(--hn-signature);
   border-bottom: 0;
@@ -182,34 +182,14 @@ function initLinksPanel() {
     linksEl.style.display = linksEl.style.display === 'none' ? 'block' : 'none';
   })
 
-  const createLinkEl = (url, comments) => {
-    const el = createEl('div', { className: 'link-item', }, linksEl);
-    const urlEl = createEl('a', {
-      className: 'url',
-      innerText: url,
-      attrs: {
-        href: url,
-        target: '_blank',
-      }
-    }, el);
-    const commentsEl = createEl('div', { className: 'comments', }, el);
-    comments.forEach(comment => {
-      const commentEl = createEl('a', {
-        // NOTE clicky is a HN built-in class that will help to jump to the comment without changing the url
-        className: 'comment-item clicky',
-        innerText: `@${comment.username}: ${comment.content}`,
-        attrs: { href: `#${comment.id}`, title: comment.age, },
-      }, commentsEl);
-      commentsEl.appendChild(commentEl);
-    });
-    return el;
-  };
-
   // loop links
+  const ignoredHosts = ['localhost','127.0.0.1', '0.0.0.0'];
   const linkCommentsMap = {};
   document.querySelectorAll('.commtext a:not([href^="reply?"])').forEach(a => {
     const url = a.href;
     if (!url) return;
+    const urlObj = new URL(url);
+    if (ignoredHosts.includes(urlObj.hostname)) return;
     if (!(url in linkCommentsMap)) {
       linkCommentsMap[url] = []
     }
@@ -234,7 +214,31 @@ function initLinksPanel() {
     }
   })
 
-  // sort links by comments length
+  const createLinkEl = (url, comments) => {
+    const el = createEl('div', { className: 'link-item', }, linksEl);
+    const urlEl = createEl('a', {
+      className: 'url',
+      // remove url schema
+      innerText: url.replace(/^https?:\/\//, ''),
+      attrs: {
+        href: url,
+        target: '_blank',
+      }
+    }, el);
+    const commentsEl = createEl('div', { className: 'comments', }, el);
+    comments.forEach(comment => {
+      const commentEl = createEl('a', {
+        // NOTE clicky is a HN built-in class that will help to jump to the comment without changing the url
+        className: 'comment-item clicky',
+        innerText: `@${comment.username}: ${comment.content}`,
+        attrs: { href: `#${comment.id}`, title: comment.age, },
+      }, commentsEl);
+      commentsEl.appendChild(commentEl);
+    });
+    return el;
+  };
+
+  // sort links by comments length and then loop the links to create elements
   Object.entries(linkCommentsMap).sort(
     (a, b) => b[1].length - a[1].length
   ).forEach(i => {
