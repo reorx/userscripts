@@ -12,3 +12,10 @@ Item page:
 
 Home page:
 ![](./hntweak.1.png)
+
+
+## GitHub TOC Sidebar
+
+I have a Chrome extension called [GitHub TOC Sidebar](https://github.com/reorx/github-toc-sidebar) that generates a table of contents for a repo's README. It's primarily a content script, so it can be conveniently ported to a userscript. I will do so if there is a demand for it.
+
+![](https://github.com/reorx/github-toc-sidebar/raw/master/images/screenshot-0.png)
