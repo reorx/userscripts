@@ -165,23 +165,6 @@ function createEl(tagName, {innerText, className, id, attrs}, appendTo) {
 
 /* collect links in comments */
 function initLinksPanel() {
-  const panel = createEl('div', {
-    className: linksPanelClass,
-  }, document.body);
-  // title
-  const titleEl = createEl('div', {
-    className: 'title',
-    innerText: 'Links in comments',
-    title: 'click to toggle the links panel'
-  }, panel)
-  // links
-  const linksEl = createEl('div', { className: 'links', }, panel);
-
-  // click titleEl to hide linksEl
-  titleEl.addEventListener('click', () => {
-    linksEl.style.display = linksEl.style.display === 'none' ? 'block' : 'none';
-  })
-
   // loop links
   const ignoredHosts = ['localhost','127.0.0.1', '0.0.0.0'];
   const linkCommentsMap = {};
@@ -212,6 +195,30 @@ function initLinksPanel() {
     if (!comments.find(c => c.id === comment.id)) {
       comments.push(comment);
     }
+  })
+
+  // cancel the function if no links found
+  const linksCount = Object.keys(linkCommentsMap).length;
+  if (linksCount === 0) {
+    return
+  }
+
+  // create links panel elements
+  const panel = createEl('div', {
+    className: linksPanelClass,
+  }, document.body);
+  // title
+  const titleEl = createEl('div', {
+    className: 'title',
+    innerText: `Links in comments (${linksCount})`,
+    title: 'click to toggle the links panel'
+  }, panel)
+  // links
+  const linksEl = createEl('div', { className: 'links', }, panel);
+
+  // click titleEl to hide linksEl
+  titleEl.addEventListener('click', () => {
+    linksEl.style.display = linksEl.style.display === 'none' ? 'block' : 'none';
   })
 
   const createLinkEl = (url, comments) => {
@@ -246,12 +253,6 @@ function initLinksPanel() {
     createLinkEl(url, comments);
   });
 
-  if (Object.keys(linkCommentsMap).length === 0) {
-    createEl('div', {
-      innerText: 'No links found in comments',
-      className: 'link-item',
-    }, linksEl)
-  }
 }
 
 // run initLinksPanel only if url matches https://news.ycombinator.com/item?id=…
