@@ -1,4 +1,5 @@
-This repository is for storing my user scripts that cater to my specific needs. If you find them useful, you can install them by copying them to your own user script extension.
+This repository is for storing some userscripts that cater to my specific needs. If you find them useful, feel free to install them by copying them into your own user script extension. I recommend using [Violentmonkey](https://violentmonkey.github.io/) if you don't already have a user script extension installed.
+
 
 ## HN Tweak
 
