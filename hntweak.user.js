@@ -109,7 +109,7 @@ textarea {
   .links {
     overflow-y: auto;
     padding: 8px 12px;
-    height: 600px;
+    max-height: 600px;
   }
 
   .link-item {
@@ -245,6 +245,13 @@ function initLinksPanel() {
     const [url, comments] = i;
     createLinkEl(url, comments);
   });
+
+  if (Object.keys(linkCommentsMap).length === 0) {
+    createEl('div', {
+      innerText: 'No links found in comments',
+      className: 'link-item',
+    }, linksEl)
+  }
 }
 
 // run initLinksPanel only if url matches https://news.ycombinator.com/item?id=…
