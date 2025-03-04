@@ -14,6 +14,16 @@ Home page:
 ![](./hntweak.1.png)
 
 
+## NTS Live Enhanced Tracklist
+
+https://greasyfork.org/en/scripts/528713-nts-live-enhanced-tracklist
+
+Adds an interactive tracklist panel to [NTS Live](https://www.nts.live/)
+shows with time-synced highlighting, clickable tracks for navigation,
+and Spotify search integration. Features include auto-scrolling to current track,
+custom dark theme, and direct playback control.
+
+
 ## GitHub TOC Sidebar
 
 I have a Chrome extension called [GitHub TOC Sidebar](https://github.com/reorx/github-toc-sidebar) that generates a table of contents for a repo's README. It's primarily a content script, so it can be conveniently ported to a userscript. I will do so if there is a demand for it.
